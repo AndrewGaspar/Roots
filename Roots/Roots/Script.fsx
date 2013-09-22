@@ -2,7 +2,7 @@
 // for more guidance on F# programming.
 
 #load "Roots.fs"
-open Roots
+open NumericalAnalysis
 open System
 
 let pow x n = System.Math.Pow(x,n)

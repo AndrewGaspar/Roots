@@ -1,4 +1,4 @@
-﻿namespace Roots
+﻿namespace NumericalAnalysis
 
 module Roots =
 
