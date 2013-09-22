@@ -5,11 +5,10 @@
 open NumericalAnalysis
 open System
 
-let pow x n = System.Math.Pow(x,n)
 let E = System.Math.E
 
-let f1 x = 6.0*(pow E x - x)
-let f1' x = 6.0*(pow E x - 1.0)
+let f1 x = 6.0*(E ** x - x)
+let f1' x = 6.0*(E ** x - 1.0)
 let f2 x = 6.5 + 2.0*(1.5 + x)*x*x
 let f2' x = 6.0*(1.0 + x)*x
 let f3 x = f1 x - f2 x
@@ -21,9 +20,9 @@ let printResult f x = printfn "f(%f) = %f" x (f x)
 ////////    TESTING BISECTION   ///////////////////////////////
 ///////////////////////////////////////////////////////////////
 
-let printBisection (iteration, lower, upper, guess, fLower, fUpper, fGuess) =
-    printfn "[a_%d, b_%d] = [%f, %f] | [f(a_%d), f(b_%d)] = [%f, %f]" iteration iteration lower upper iteration iteration fLower fUpper
-    printfn "c_%d = %f | f(c_%d) = %f" iteration guess iteration fGuess
+let printBisection (iteration, (lower: Roots.ValueEval), (upper: Roots.ValueEval), (guess: Roots.ValueEval)) =
+    printfn "[a_%d, b_%d] = [%f, %f] | [f(a_%d), f(b_%d)] = [%f, %f]" iteration iteration lower.value upper.value iteration iteration lower.eval upper.eval
+    printfn "c_%d = %f | f(c_%d) = %f" iteration guess.value iteration guess.eval
 
 let bisection = Roots.bisectionDebug printBisection
 
@@ -33,8 +32,8 @@ bisection f3 -1.0 1.0 1e-4 |> printResult f3
 ////////    TESTING NEWTON  ///////////////////////////////////
 ///////////////////////////////////////////////////////////////
 
-let printNewton (iteration, p1, p0, fP1, fP0, f'Prior) = 
-    printfn "p_%d = %f | f(p_%d) = %f" (iteration+1) p1 (iteration+1) fP1
+let printNewton (iteration, (root1: Roots.ValueEval), (root0: Roots.ValueEval), f'Prior) = 
+    printfn "p_%d = %f | f(p_%d) = %f" (iteration+1) root1.value (iteration+1) root1.eval
 
 let newton = Roots.newtonDebug printNewton
 
@@ -54,9 +53,9 @@ with
 ////////    TESTING SECANT  ///////////////////////////////////
 ///////////////////////////////////////////////////////////////
 
-let printSecant (iteration, p2, p1, p0, fP2, fP1, fP0, f'Prior) =
+let printSecant (iteration, (root2: Roots.ValueEval), (root1: Roots.ValueEval), (root0: Roots.ValueEval), f'Prior) =
     let currIter = iteration + 2
-    printfn "p_%d = %f | f(p_%d) = %f" currIter p2 currIter fP2
+    printfn "p_%d = %f | f(p_%d) = %f" currIter root2.value currIter root2.eval
 
 let secant = Roots.secantDebug printSecant
 
