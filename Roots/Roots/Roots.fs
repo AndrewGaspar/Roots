@@ -38,23 +38,17 @@ module Roots =
     // Searches for the roots of a function by bisecting a range with each iteration until the function
     // returns a value for the midpoint of that range within a certain accuracy from 0.
     let bisectionDebug debug f lower upper accuracy =
-        let rec bisectionCalc lower upper iter =
+        let rec bisectionCalc iter (lower,upper) =
             let midpoint = (lower.value+upper.value)/2.0 // calculate the midpoint
             let acc = (upper.value-lower.value)/2.0 // calculate the accuracy
 
-            let mid = { value = midpoint; eval = f midpoint }
+            let mid = evaluate f midpoint // determine the value of the midpoint
             debug (iter,lower,upper,mid); // <- for Numerical Analysis assignment
 
             if acc < accuracy || mid.eval = 0.0 then mid.value // return the midpoint if the desired accuracy is achieved
-            else
-                // Update the bounds based on current boundsd and calculations
-                let (newLower, newUpper) = updateBounds lower upper mid iter
+            else updateBounds lower upper mid iter |> bisectionCalc (iter + 1)
 
-                // Recursively call bisectionCalc with new bounds
-                bisectionCalc newLower newUpper (iter + 1)
-
-        let (l, u) = (evaluate f lower,evaluate f upper)
-        bisectionCalc l u 0
+        bisectionCalc 0 (evaluate f lower,evaluate f upper)
 
     let bisection = bisectionDebug (fun _ -> ())
 
