@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Roots</id>
+    <version>1.0</version>
+    <title>Root Finding in F#</title>
+    <authors>Andrew Gaspar</authors>
+    <owners>Andrew Gaspar</owners>
+    <licenseUrl>https://github.com/AndrewGaspar/Roots/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/AndrewGaspar/Roots</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Find roots of an arbitrary function using bisection, newton, and secant method.</description>
+    <releaseNotes>This is the initial release.</releaseNotes>
+    <copyright>Copyright 2013</copyright>
+    <tags>Roots F# Numerical Analysis Functional Root Finding Newton Secant Bisection</tags>
+  </metadata>
+</package>
